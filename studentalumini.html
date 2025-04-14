@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student-Alumni Query Platform</title>
+    <style>
+        :root {
+            --beige: #F5F5DC;
+            --dark-green: #2E8B57;
+            --light-green: #90EE90;
+            --white: #FFFFFF;
+            --dark-gray: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--beige);
+            color: var(--dark-gray);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+            border: 1px solid var(--dark-green);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chat-header {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 15px;
+            font-weight: bold;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--white);
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            max-width: 70%;
+            position: relative;
+        }
+        
+        .student-message {
+            background-color: var(--light-green);
+            margin-right: auto;
+            border-top-left-radius: 0;
+        }
+        
+        .alumni-message {
+            background-color: var(--dark-green);
+            color: var(--white);
+            margin-left: auto;
+            border-top-right-radius: 0;
+        }
+        
+        .message-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            margin-bottom: 5px;
+        }
+        
+        .student-name {
+            font-weight: bold;
+            color: var(--dark-green);
+        }
+        
+        .alumni-name {
+            font-weight: bold;
+            color: var(--light-green);
+        }
+        
+        .message-time {
+            color: #777;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: var(--beige);
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--dark-green);
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        
+        .chat-input button {
+            padding: 12px 20px;
+            background-color: var(--dark-green);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #1f6a3d;
+        }
+        
+        .query-list {
+            margin-top: 30px;
+        }
+        
+        .query-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .query-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .query-title {
+            font-weight: bold;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+        
+        .query-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #777;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #ddd;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab.active {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 60vh;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student-Alumni Query Platform</h1>
+            <p>Ask questions and get answers from experienced alumni</p>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active">Recent Queries</div>
+            <div class="tab">Ask New Question</div>
+        </div>
+        
+        <div class="query-list">
+            <div class="query-item">
+                <div class="query-title">How to prepare for technical interviews at FAANG companies?</div>
+                <div class="query-preview">I'm in my final year and want to know the best resources and strategies...</div>
+                <div class="query-meta">
+                    <span class="query-author">Posted by: Rahul (CS '24)</span>
+                    <span class="query-date">2 days ago</span>
+                </div>
+            </div>
+            
+            <div class="query-item">
+                <div class="query-title">What are the best electives for someone interested in AI?</div>
+                <div class="query-preview">I want to specialize in machine learning but not sure which electives...</div>
+                <div class="query-meta">
+                    <span class="query-author">Posted by: Priya (ECE '25)</span>
+                    <span class="query-date">5 days ago</span>
+                </div>
+            </div>
+            
+            <div class="query-item">
+                <div class="query-title">Internship opportunities for second year students?</div>
+                <div class="query-preview">Are there any good internship options for someone with basic coding...</div>
+                <div class="query-meta">
+                    <span class="query-author">Posted by: Arjun (ME '26)</span>
+                    <span class="query-date">1 week ago</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                Discussion: "How to prepare for technical interviews at FAANG companies?"
+            </div>
+            <div class="chat-messages">
+                <div class="message student-message">
+                    <div class="message-info">
+                        <span class="student-name">Rahul (CS '24)</span>
+                        <span class="message-time">May 15, 3:24 PM</span>
+                    </div>
+                    <div class="message-content">
+                        Hi everyone! I'm in my final year and starting to prepare for technical interviews. 
+                        What would be the best resources and strategy to crack FAANG interviews? 
+                        I know data structures are important but not sure about the depth needed.
+                    </div>
+                </div>
+                
+                <div class="message alumni-message">
+                    <div class="message-info">
+                        <span class="alumni-name">Sanjay (CS '18) - SDE at Amazon</span>
+                        <span class="message-time">May 15, 4:12 PM</span>
+                    </div>
+                    <div class="message-content">
+                        Hi Rahul! Great question. I'd recommend starting with "Cracking the Coding Interview" 
+                        as your bible. For FAANG, you need to be very comfortable with medium-level Leetcode 
+                        problems (can solve in 20-25 mins). Focus on arrays, strings, trees, graphs, and DP.
+                    </div>
+                </div>
+                
+                <div class="message alumni-message">
+                    <div class="message-info">
+                        <span class="alumni-name">Neha (CS '20) - SWE at Google</span>
+                        <span class="message-time">May 15, 4:30 PM</span>
+                    </div>
+                    <div class="message-content">
+                        Adding to what Sanjay said, system design becomes important for higher levels. 
+                        For new grads, focus on coding first but do read about basic system design concepts. 
+                        Also, practice explaining your thought process out loud - communication is key!
+                    </div>
+                </div>
+                
+                <div class="message student-message">
+                    <div class="message-info">
+                        <span class="student-name">Rahul (CS '24)</span>
+                        <span class="message-time">May 15, 5:05 PM</span>
+                    </div>
+                    <div class="message-content">
+                        Thank you both! How many Leetcode problems would you recommend solving before 
+                        feeling interview-ready? And should I focus on quantity or quality (repeating 
+                        problems to master them)?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message here...">
+                <button>Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
