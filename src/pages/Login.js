@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TirthaYatra Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState } = React;
+
+    function LoginPage() {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        alert(Login attempted with email: ${email});
+        // Add Firebase auth here later
+      };
+      
+      return (
+        <div style={styles.container}>
+          <div style={styles.card}>
+            {/* Logo/Title */}
+            <h1 style={styles.title}>TirthaYatra</h1>
+            <p style={styles.subtitle}>Your college life companion</p>
+            
+            {/* Social Login Buttons */}
+            <button style={styles.socialButton}>
+              <i className="fab fa-google" style={styles.icon}></i>
+              Sign in with College ID (Google)
+            </button>
+            <button style={styles.socialButton}>
+              <i className="fab fa-microsoft" style={styles.icon}></i>
+              Sign in with College ID (Microsoft)
+            </button>
+            
+            <div style={styles.divider}>OR</div>
+            
+            {/* Email/Password Form */}
+            <form onSubmit={handleSubmit} style={styles.form}>
+              <input
+                type="email"
+                placeholder="Email or Username"
+                style={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                style={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <a href="#" style={styles.forgotPassword}>Forgot Password?</a>
+              <button type="submit" style={styles.loginButton}>Sign In</button>
+            </form>
+            
+            {/* Sign Up Link */}
+            <p style={styles.signupText}>
+              Don't have an account? <a href="#" style={styles.signupLink}>Sign Up</a>
+            </p>
+            
+            {/* Footer */}
+            <div style={styles.footer}>
+              <a href="#" style={styles.footerLink}>Privacy Policy</a>
+              <div style={styles.downloadBadges}>
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
+                  alt="App Store" 
+                  style={styles.badge}
+                />
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                  alt="Play Store" 
+                  style={styles.badge}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Color palette
+    const colors = {
+      darkBrown: '#5c331f',
+      mutedGreen: '#655f44',
+      lightBeige: '#eddac9',
+      white: '#ffffff'
+    };
+
+    // Styles
+    const styles = {
+      container: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: colors.lightBeige,
+        fontFamily: '"Poppins", sans-serif',
+        padding: '20px'
+      },
+      card: {
+        backgroundColor: colors.white,
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        padding: '40px',
+        width: '100%',
+        maxWidth: '450px',
+        textAlign: 'center'
+      },
+      title: {
+        color: colors.darkBrown,
+        fontSize: '32px',
+        fontWeight: '600',
+        marginBottom: '8px'
+      },
+      subtitle: {
+        color: colors.mutedGreen,
+        fontSize: '16px',
+        marginBottom: '32px'
+      },
+      socialButton: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        padding: '12px',
+        marginBottom: '12px',
+        backgroundColor: 'transparent',
+        border: 1px solid ${colors.darkBrown},
+        borderRadius: '8px',
+        color: colors.darkBrown,
+        fontSize: '14px',
+        fontWeight: '500',
+        cursor: 'pointer',
+        transition: 'all 0.3s',
+        ':hover': {
+          backgroundColor: colors.darkBrown,
+          color: colors.white
+        }
+      },
+      icon: {
+        marginRight: '10px',
+        fontSize: '18px'
+      },
+      divider: {
+        color: colors.mutedGreen,
+        margin: '20px 0',
+        position: 'relative',
+        ':before': {
+          content: '""',
+          position: 'absolute',
+          top: '50%',
+          left: '0',
+          right: '0',
+          height: '1px',
+          backgroundColor: colors.mutedGreen,
+          zIndex: '-1'
+        },
+        ':after': {
+          content: '""',
+          position: 'relative',
+          display: 'inline-block',
+          backgroundColor: colors.white,
+          padding: '0 10px'
+        }
+      },
+      form: {
+        width: '100%',
+        marginBottom: '20px'
+      },
+      input: {
+        width: '100%',
+        padding: '14px',
+        marginBottom: '16px',
+        border: 1px solid ${colors.mutedGreen},
+        borderRadius: '8px',
+        fontSize: '14px',
+        ':focus': {
+          outline: 'none',
+          borderColor: colors.darkBrown
+        }
+      },
+      forgotPassword: {
+        display: 'block',
+        textAlign: 'right',
+        color: colors.darkBrown,
+        fontSize: '13px',
+        marginBottom: '20px',
+        textDecoration: 'none'
+      },
+      loginButton: {
+        width: '100%',
+        padding: '14px',
+        backgroundColor: colors.darkBrown,
+        color: colors.white,
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '16px',
+        fontWeight: '600',
+        cursor: 'pointer',
+        transition: 'all 0.3s',
+        ':hover': {
+          opacity: '0.9'
+        }
+      },
+      signupText: {
+        color: colors.mutedGreen,
+        fontSize: '14px',
+        marginBottom: '30px'
+      },
+      signupLink: {
+        color: colors.darkBrown,
+        fontWeight: '600',
+        textDecoration: 'none'
+      },
+      footer: {
+        borderTop: 1px solid ${colors.mutedGreen},
+        paddingTop: '20px'
+      },
+      footerLink: {
+        color: colors.mutedGreen,
+        fontSize: '13px',
+        textDecoration: 'none',
+        marginBottom: '15px',
+        display: 'inline-block'
+      },
+      downloadBadges: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        marginTop: '15px'
+      },
+      badge: {
+        height: '40px',
+        borderRadius: '6px'
+      }
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<LoginPage />);
+  </script>
+</body>
+</html>
