@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TirthaYatra | Student Hub</title>
+    <style>
+        :root {
+            --brown: #835b34;
+            --dark-green: #3f3e33;
+            --green: #868873;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background: white;
+            color: var(--dark-green);
+        }
+
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: white;
+            z-index: 100;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 2px;
+            background: var(--brown);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .search-bar {
+            border: 1px solid var(--green);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            border: none;
+            margin-left: 0.5rem;
+            outline: none;
+        }
+
+        .profile-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--brown);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 5%;
+            text-align: center;
+        }
+
+        .hero-visual {
+            width: 100%;
+            height: 400px;
+            background: var(--green);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 4rem 5%;
+            background: var(--green);
+        }
+
+        .about-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        /* Gen-Z Form */
+        .genz-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid var(--brown);
+            border-radius: 10px;
+            background: transparent;
+        }
+
+        .form-button {
+            background: var(--dark-green);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="hamburger">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+        
+        <div class="nav-right">
+            <div class="search-bar">
+                🔍
+                <input type="text" class="search-input" placeholder="Search features...">
+            </div>
+            <a href="#about" style="color: var(--dark-green); text-decoration: none;">About</a>
+            <a href="#contact" style="color: var(--dark-green); text-decoration: none;">Contact</a>
+            <div class="profile-icon">👤</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 style="font-size: 2.5rem; color: var(--dark-green);">Your Smart Campus Companion</h1>
+        <div class="hero-visual"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-card">
+            <h2 style="color: var(--brown); margin-bottom: 1rem;">Why TirthaYatra?</h2>
+            <p style="color: var(--dark-green); line-height: 1.6;">
+                We blend academic tools with wellness features in one seamless platform, 
+                designed specifically for modern student needs.
+            </p>
+        </div>
+    </section>
+
+    <!-- Gen-Z Form -->
+    <form class="genz-form">
+        <input type="text" class="form-input" placeholder="Your Name" style="color: var(--dark-green);">
+        <input type="email" class="form-input" placeholder="Student Email" style="color: var(--dark-green);">
+        <textarea class="form-input" rows="4" placeholder="Your Message" style="color: var(--dark-green);"></textarea>
+        <button type="submit" class="form-button">Send Wave 🌊</button>
+    </form>
+
+    <script>
+        // Hamburger menu functionality
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            // Add mobile menu functionality here
+            alert('Mobile menu clicked!');
+        });
+    </script>
+</body>
+</html>

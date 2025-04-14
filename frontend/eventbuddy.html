@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TirthaYatra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3f3e33; /* dark green */
+            --secondary-color: #868873; /* green */
+            --accent-color: #835b34; /* brown */
+            --surface-color: #eae3d8; /* beige */
+            --text-on-primary: #eae3d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--surface-color);
+            color: var(--primary-color);
+        }
+
+        .app-bar {
+            background-color: var(--primary-color);
+            color: var(--text-on-primary);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .app-bar-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            background-color: var(--surface-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--surface-color);
+            z-index: 200;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .drawer-open {
+            left: 0;
+        }
+
+        .drawer-header {
+            background-color: var(--primary-color);
+            padding: 32px 16px;
+            color: var(--text-on-primary);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .drawer-section {
+            border-bottom: 1px solid rgba(63, 62, 51, 0.1);
+        }
+
+        .drawer-section-title {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            color: var(--primary-color);
+        }
+
+        .drawer-section-title i {
+            margin-right: 12px;
+            color: var(--primary-color);
+        }
+
+        .drawer-section-items {
+            padding-left: 40px;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+
+        .drawer-section-item {
+            padding: 12px 0;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .drawer-section-item:hover {
+            color: var(--accent-color);
+        }
+
+        .drawer-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            display: none;
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 16px;
+        }
+
+        .welcome-section {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .welcome-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .welcome-date {
+            font-size: 14px;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+
+        .welcome-divider {
+            border: none;
+            height: 1px;
+            background-color: rgba(63, 62, 51, 0.2);
+            margin: 12px 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .dashboard-box {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .box-header i {
+            font-size: 18px;
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        .box-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .box-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .progress-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .progress-title {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .progress-percent {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            color: var(--accent-color);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(134, 136, 115, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary-color);
+            width: 68%;
+            border-radius: 4px;
+        }
+
+        .progress-subtext {
+            font-size: 12px;
+            text-align: center;
+            color: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        .action-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            display: block;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .status-item i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+            font-size: 16px;
+        }
+
+        .deadline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .deadline-checkbox {
+            margin-right: 8px;
+            accent-color: var(--accent-color);
+        }
+
+        /* New styles for student-event section */
+        .student-event-section {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        .student-event-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .student-event-table th {
+            background-color: var(--secondary-color);
+            color: var(--text-on-primary);
+            padding: 10px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .student-event-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(63, 62, 51, 0.1);
+        }
+
+        .student-event-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .student-event-table tr:hover {
+            background-color: rgba(134, 136, 115, 0.1);
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sort-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-on-primary);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.2s;
+        }
+
+        .sort-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .sort-btn.active {
+            background-color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <div style="display: flex; align-items: center;">
+            <button id="menu-button" style="background: none; border: none; margin-right: 16px;">
+                <i class="material-icons" style="color: var(--text-on-primary);">menu</i>
+            </button>
+            <div class="app-bar-title">TirthaYatra</div>
+        </div>
+        <button id="profile-button" style="background: none; border: none;">
+            <div class="avatar">
+                <i class="material-icons">person</i>
+            </div>
+        </button>
+    </div>
+
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">TirthaYatra</div>
+        
+        <div class="drawer-section">
+            <div class="drawer-section-title" data-section="TRAIL">
+                <i class="material-icons">school</i>
+                <span>TRAIL</span>
+                <i class="material-icons" style="margin-left: auto;">expand_more</i>
+            </div>
+            <div class="drawer-section-items" id="TRAIL-items">
+                <div class="drawer-section-item">Roadmap</div>
+                <div class="drawer-section-item">Mindmap</div>
+                <div class="drawer-section-item">Journey Map</div>
+                <div class="drawer-section-item">Planner</div>
+            </div>
+        </div>
+        
+        <div class="drawer-section">
+            <div class="drawer-section-title" data-section="HEAR_ME">
+                <i class="material-icons">self_improvement</i>
+                <span>HEAR ME</span>
+                <i class="material-icons" style="margin-left: auto;">expand_more</i>
+            </div>
+            <div class="drawer-section-items" id="HEAR_ME-items">
+                <div class="drawer-section-item">Anonymous Chat</div>
+                <div class="drawer-section-item">Counselor Connect</div>
+                <div class="drawer-section-item">Mood Tracker</div>
+                <div class="drawer-section-item">Meditations</div>
+            </div>
+        </div>
+        
+        <div class="drawer-section">
+            <div class="drawer-section-title" data-section="KHOJ">
+                <i class="material-icons">map</i>
+                <span>KHOJ</span>
+                <i class="material-icons" style="margin-left: auto;">expand_more</i>
+            </div>
+            <div class="drawer-section-items" id="KHOJ-items">
+                <div class="drawer-section-item">Library Seats</div>
+                <div class="drawer-section-item">Class Vacancy</div>
+                <div class="drawer-section-item">Event Radar</div>
+                <div class="drawer-section-item">Campus Hotspots</div>
+            </div>
+        </div>
+        
+        <div class="drawer-section">
+            <div class="drawer-section-title" data-section="COLLAB">
+                <i class="material-icons">group</i>
+                <span>COLLAB</span>
+                <i class="material-icons" style="margin-left: auto;">expand_more</i>
+            </div>
+            <div class="drawer-section-items" id="COLLAB-items">
+                <div class="drawer-section-item">Study Squads</div>
+                <div class="drawer-section-item">Event Buddies</div>
+                <div class="drawer-section-item">Skill Exchange</div>
+                <div class="drawer-section-item">Club Hub</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Welcome back, Student!</h1>
+            <div class="welcome-date">Today is 2025-04-14<br>3 days until midterms</div>
+            <hr class="welcome-divider">
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-box">
+                    <div class="box-header">
+                        <i class="material-icons">school</i>
+                        <div class="box-title">Study Optimization</div>
+                    </div>
+                    <div class="box-content">
+                        <div class="progress-container">
+                            <div class="progress-percent">68%</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-subtext">3/5 tasks completed</div>
+                        </div>
+                        <a href="#" class="action-link">View Roadmap →</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-box">
+                    <div class="box-header">
+                        <i class="material-icons">self_improvement</i>
+                        <div class="box-title">Mental Wellbeing</div>
+                    </div>
+                    <div class="box-content">
+                        <div class="status-item">
+                            <i class="material-icons">check_circle</i>
+                            <span>Weekly check-in</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="material-icons">group</i>
+                            <span>2 peers online</span>
+                        </div>
+                        <a href="#" class="action-link" style="margin-top: auto;">Meditate →</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-box">
+                    <div class="box-header">
+                        <i class="material-icons">event</i>
+                        <div class="box-title">Upcoming Deadlines</div>
+                    </div>
+                    <div class="box-content">
+                        <div class="deadline-item">
+                            <input type="checkbox" class="deadline-checkbox">
+                            <span>Math Assignment</span>
+                        </div>
+                        <div class="deadline-item">
+                            <input type="checkbox" class="deadline-checkbox">
+                            <span>Literature Essay</span>
+                        </div>
+                        <div class="deadline-item">
+                            <input type="checkbox" class="deadline-checkbox">
+                            <span>Science Project</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-box">
+                    <div class="box-header">
+                        <i class="material-icons">map</i>
+                        <div class="box-title">Campus Navigator</div>
+                    </div>
+                    <div class="box-content">
+                        <div style="text-align: center; margin-top: auto;">
+                            <i class="material-icons" style="font-size: 40px; color: var(--secondary-color);">explore</i>
+                            <p style="margin-top: 8px; font-size: 14px;">Explore campus hotspots</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Student Event Section -->
+        <div class="student-event-section">
+            <div class="section-title">
+                <i class="material-icons">event_available</i>
+                <span>Student Event Preferences</span>
+            </div>
+            
+            <div class="sort-controls">
+                <button class="sort-btn active" data-sort="name">Sort by Name</button>
+                <button class="sort-btn" data-sort="event">Sort by Event</button>
+            </div>
+            
+            <table class="student-event-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Event Interested In</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="student-event-data">
+                    <tr>
+                        <td>Rahul Sharma</td>
+                        <td>Coding Hackathon</td>
+                        <td>2025-04-20</td>
+                    </tr>
+                    <tr>
+                        <td>Priya Patel</td>
+                        <td>Art Exhibition</td>
+                        <td>2025-04-22</td>
+                    </tr>
+                    <tr>
+                        <td>Arjun Singh</td>
+                        <td>Music Festival</td>
+                        <td>2025-04-25</td>
+                    </tr>
+                    <tr>
+                        <td>Neha Gupta</td>
+                        <td>Science Symposium</td>
+                        <td>2025-04-18</td>
+                    </tr>
+                    <tr>
+                        <td>Vikram Joshi</td>
+                        <td>Sports Tournament</td>
+                        <td>2025-04-21</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Drawer toggle functionality
+            const menuButton = document.getElementById('menu-button');
+            const drawer = document.getElementById('drawer');
+            const drawerBackdrop = document.getElementById('drawer-backdrop');
+            
+            menuButton.addEventListener('click', function() {
+                drawer.classList.add('drawer-open');
+                drawerBackdrop.style.display = 'block';
+            });
+            
+            drawerBackdrop.addEventListener('click', function() {
+                drawer.classList.remove('drawer-open');
+                drawerBackdrop.style.display = 'none';
+            });
+            
+            // Section expansion functionality
+            const sectionTitles = document.querySelectorAll('.drawer-section-title');
+            
+            sectionTitles.forEach(title => {
+                title.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    const items = document.getElementById(${section}-items);
+                    const icon = this.querySelector('.material-icons:last-child');
+                    
+                    if (items.style.maxHeight) {
+                        items.style.maxHeight = null;
+                        icon.textContent = 'expand_more';
+                    } else {
+                        items.style.maxHeight = items.scrollHeight + 'px';
+                        icon.textContent = 'expand_less';
+                    }
+                });
+            });
+            
+            // Initialize sections as collapsed
+            sectionTitles.forEach(title => {
+                const section = title.getAttribute('data-section');
+                const items = document.getElementById(${section}-items);
+                const icon = title.querySelector('.material-icons:last-child');
+                
+                items.style.maxHeight = null;
+                icon.textContent = 'expand_more';
+            });
+
+            // Sorting functionality for student-event table
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            const studentEventData = document.getElementById('student-event-data');
+            const rows = Array.from(studentEventData.querySelectorAll('tr'));
+            
+            sortButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    sortButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const sortBy = this.getAttribute('data-sort');
+                    
+                    // Sort the rows
+                    rows.sort((a, b) => {
+                        const aValue = a.cells[sortBy === 'name' ? 0 : 1].textContent;
+                        const bValue = b.cells[sortBy === 'name' ? 0 : 1].textContent;
+                        return aValue.localeCompare(bValue);
+                    });
+                    
+                    // Clear the table
+                    while (studentEventData.firstChild) {
+                        studentEventData.removeChild(studentEventData.firstChild);
+                    }
+                    
+                    // Add sorted rows back to the table
+                    rows.forEach(row => {
+                        studentEventData.appendChild(row);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

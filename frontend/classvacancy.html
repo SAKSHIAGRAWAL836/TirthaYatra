@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TirthaYatra - Class Vacancy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3f3e33; /* dark green */
+            --secondary-color: #868873; /* green */
+            --accent-color: #835b34; /* brown */
+            --surface-color: #eae3d8; /* beige */
+            --text-on-primary: #eae3d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--surface-color);
+            color: var(--primary-color);
+        }
+
+        .app-bar {
+            background-color: var(--primary-color);
+            color: var(--text-on-primary);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .app-bar-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            background-color: var(--surface-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 16px;
+        }
+
+        .dashboard-box {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .box-header i {
+            font-size: 24px;
+            margin-right: 12px;
+            color: var(--accent-color);
+        }
+
+        .box-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .building-selector {
+            display: flex;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(63, 62, 51, 0.2);
+        }
+
+        .building-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+
+        .building-tab.active {
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .floor-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .floor-button {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .floor-button.active {
+            background-color: var(--secondary-color);
+            color: var(--surface-color);
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .time-button {
+            background: none;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            color: var(--primary-color);
+        }
+
+        .time-button.active {
+            background-color: var(--accent-color);
+            color: var(--surface-color);
+            border-color: var(--accent-color);
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .room-card {
+            background-color: rgba(134, 136, 115, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .room-card.occupied {
+            border-left-color: var(--accent-color);
+            opacity: 0.7;
+        }
+
+        .room-number {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .room-status {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .room-capacity {
+            height: 4px;
+            background-color: rgba(134, 136, 115, 0.2);
+            border-radius: 2px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .capacity-fill {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .room-time {
+            font-size: 11px;
+            color: var(--accent-color);
+        }
+
+        .refresh-button {
+            background-color: var(--accent-color);
+            color: var(--surface-color);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .refresh-button i {
+            margin-right: 8px;
+        }
+
+        .no-classes {
+            text-align: center;
+            padding: 20px;
+            color: var(--accent-color);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <div style="display: flex; align-items: center;">
+            <button id="menu-button" style="background: none; border: none; margin-right: 16px;">
+                <i class="material-icons" style="color: var(--text-on-primary);">arrow_back</i>
+            </button>
+            <div class="app-bar-title">Class Vacancy</div>
+        </div>
+        <button id="profile-button" style="background: none; border: none;">
+            <div class="avatar">
+                <i class="material-icons">person</i>
+            </div>
+        </button>
+    </div>
+
+    <div class="content">
+        <div class="dashboard-box">
+            <div class="box-header">
+                <i class="material-icons">meeting_room</i>
+                <div class="box-title">Classroom Availability</div>
+            </div>
+
+            <div class="building-selector">
+                <div class="building-tab active" data-building="AB1">Academic Block 1 (AB1)</div>
+                <div class="building-tab" data-building="AB2">Academic Block 2 (AB2)</div>
+            </div>
+
+            <!-- AB1 Floors (5 floors) -->
+            <div class="floor-selector" id="ab1-floors">
+                <button class="floor-button active" data-floor="1">1st Floor</button>
+                <button class="floor-button" data-floor="2">2nd Floor</button>
+                <button class="floor-button" data-floor="3">3rd Floor</button>
+                <button class="floor-button" data-floor="4">4th Floor</button>
+                <button class="floor-button" data-floor="5">5th Floor</button>
+            </div>
+
+            <!-- AB2 Floors (4 floors, hidden by default) -->
+            <div class="floor-selector" id="ab2-floors" style="display: none;">
+                <button class="floor-button active" data-floor="1">1st Floor</button>
+                <button class="floor-button" data-floor="2">2nd Floor</button>
+                <button class="floor-button" data-floor="3">3rd Floor</button>
+                <button class="floor-button" data-floor="4">4th Floor</button>
+            </div>
+
+            <div class="time-filter">
+                <button class="time-button active" data-time="current">Current</button>
+                <button class="time-button" data-time="9-10">9:00-10:30</button>
+                <button class="time-button" data-time="11-12">11:00-12:30</button>
+                <button class="time-button" data-time="2-3">2:00-3:30</button>
+                <button class="time-button" data-time="4-5">4:00-5:30</button>
+                <button class="time-button" data-time="6-7">6:00-7:30</button>
+            </div>
+
+            <!-- AB1 1st Floor Rooms -->
+            <div class="room-grid" id="ab1-floor1-rooms">
+                <!-- Rooms 101-112 -->
+                <div class="room-card">
+                    <div class="room-number">101</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 10%;"></div></div>
+                    <div class="room-time">Free until 3:30 PM</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">102</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 15%;"></div></div>
+                    <div class="room-time">Free until 4:00 PM</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">103</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 90%;"></div></div>
+                    <div class="room-time">Math Lecture</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">104</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 5%;"></div></div>
+                    <div class="room-time">Free all day</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">105</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 80%;"></div></div>
+                    <div class="room-time">Physics Lab</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">106</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 20%;"></div></div>
+                    <div class="room-time">Free until 2:00 PM</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">107</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 30%;"></div></div>
+                    <div class="room-time">Free until 1:00 PM</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">108</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 95%;"></div></div>
+                    <div class="room-time">Chemistry Lecture</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">109</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 10%;"></div></div>
+                    <div class="room-time">Free until 5:00 PM</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">110</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 25%;"></div></div>
+                    <div class="room-time">Free until 6:00 PM</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">111</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 75%;"></div></div>
+                    <div class="room-time">Biology Seminar</div>
+                </div>
+                <div class="room-card">
+                    <div class="room-number">112</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 15%;"></div></div>
+                    <div class="room-time">Free until 4:30 PM</div>
+                </div>
+            </div>
+
+            <!-- AB1 2nd Floor Rooms (hidden by default) -->
+            <div class="room-grid" id="ab1-floor2-rooms" style="display: none;">
+                <!-- Sample rooms for 2nd floor -->
+                <div class="room-card">
+                    <div class="room-number">201</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 10%;"></div></div>
+                    <div class="room-time">Free until 3:30 PM</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">202</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 85%;"></div></div>
+                    <div class="room-time">History Lecture</div>
+                </div>
+                <!-- More rooms would be listed here in a real implementation -->
+                <div class="no-classes">Select a time slot to view classroom availability</div>
+            </div>
+
+            <!-- AB2 1st Floor Rooms (hidden by default) -->
+            <div class="room-grid" id="ab2-floor1-rooms" style="display: none;">
+                <div class="room-card">
+                    <div class="room-number">101</div>
+                    <div class="room-status">Available</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 20%;"></div></div>
+                    <div class="room-time">Free until 2:00 PM</div>
+                </div>
+                <div class="room-card occupied">
+                    <div class="room-number">102</div>
+                    <div class="room-status">Occupied</div>
+                    <div class="room-capacity"><div class="capacity-fill" style="width: 90%;"></div></div>
+                    <div class="room-time">Computer Science Lab</div>
+                </div>
+                <!-- More rooms would be listed here in a real implementation -->
+            </div>
+
+            <button class="refresh-button">
+                <i class="material-icons">refresh</i>
+                <span>Refresh Availability</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Building selector functionality
+            const buildingTabs = document.querySelectorAll('.building-tab');
+            const ab1Floors = document.getElementById('ab1-floors');
+            const ab2Floors = document.getElementById('ab2-floors');
+            const timeButtons = document.querySelectorAll('.time-button');
+            
+            // Room containers
+            const ab1Floor1Rooms = document.getElementById('ab1-floor1-rooms');
+            const ab1Floor2Rooms = document.getElementById('ab1-floor2-rooms');
+            const ab2Floor1Rooms = document.getElementById('ab2-floor1-rooms');
+
+            buildingTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    buildingTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const building = this.getAttribute('data-building');
+                    
+                    // Show appropriate floor selector
+                    if (building === 'AB1') {
+                        ab1Floors.style.display = 'flex';
+                        ab2Floors.style.display = 'none';
+                        
+                        // Show AB1 default floor (1st floor)
+                        showFloorRooms('AB1', '1');
+                    } else if (building === 'AB2') {
+                        ab1Floors.style.display = 'none';
+                        ab2Floors.style.display = 'flex';
+                        
+                        // Show AB2 default floor (1st floor)
+                        showFloorRooms('AB2', '1');
+                    }
+                });
+            });
+
+            // Floor selector functionality for AB1
+            const ab1FloorButtons = ab1Floors.querySelectorAll('.floor-button');
+            ab1FloorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    ab1FloorButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const floor = this.getAttribute('data-floor');
+                    showFloorRooms('AB1', floor);
+                });
+            });
+
+            // Floor selector functionality for AB2
+            const ab2FloorButtons = ab2Floors.querySelectorAll('.floor-button');
+            ab2FloorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    ab2FloorButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const floor = this.getAttribute('data-floor');
+                    showFloorRooms('AB2', floor);
+                });
+            });
+
+            // Time filter functionality
+            timeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    timeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real app, this would filter the rooms by time slot
+                    const time = this.getAttribute('data-time');
+                    filterRoomsByTime(time);
+                });
+            });
+
+            // Back button functionality
+            document.getElementById('menu-button').addEventListener('click', function() {
+                window.history.back();
+            });
+
+            // Refresh button functionality
+            document.querySelector('.refresh-button').addEventListener('click', function() {
+                // In a real app, this would fetch updated data from the server
+                alert('Classroom availability refreshed!');
+            });
+
+            // Function to show appropriate floor rooms
+            function showFloorRooms(building, floor) {
+                // Hide all room grids first
+                document.querySelectorAll('.room-grid').forEach(grid => {
+                    grid.style.display = 'none';
+                });
+                
+                // Show the selected floor's rooms
+                if (building === 'AB1') {
+                    if (floor === '1') {
+                        ab1Floor1Rooms.style.display = 'grid';
+                    } else if (floor === '2') {
+                        ab1Floor2Rooms.style.display = 'grid';
+                    }
+                    // Add more floors as needed
+                } else if (building === 'AB2') {
+                    if (floor === '1') {
+                        ab2Floor1Rooms.style.display = 'grid';
+                    }
+                    // Add more floors as needed
+                }
+            }
+
+            // Function to filter rooms by time slot
+            function filterRoomsByTime(time) {
+                // In a real app, this would filter the displayed rooms
+                console.log(Filtering rooms for time slot: ${time});
+            }
+        });
+    </script>
+</body>
+</html>
