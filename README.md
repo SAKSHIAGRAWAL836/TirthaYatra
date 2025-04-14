@@ -12,5 +12,5 @@ This is your one-stop app for:
 >Financial Health Tracking,
 >Career Preparation
 
-Built by students, for students — because we get it. College isn’t just a degree. It’s a whole journey.
+Built by students, for students because we get it. College isn’t just a degree. It’s a whole journey.
 So pack your bags, we coded the map. Welcome to the TirthaYatra.
