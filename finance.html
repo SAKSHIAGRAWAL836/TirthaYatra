@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TirthaYatra - Student Finance Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3f3e33; /* dark green */
+            --secondary-color: #868873; /* green */
+            --accent-color: #835b34; /* brown */
+            --surface-color: #eae3d8; /* beige */
+            --text-on-primary: #eae3d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--surface-color);
+            color: var(--primary-color);
+        }
+
+        .app-bar {
+            background-color: var(--primary-color);
+            color: var(--text-on-primary);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .app-bar-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .avatar {
+            background-color: var(--surface-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 16px;
+        }
+
+        .finance-section {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        .student-type-toggle {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--accent-color);
+        }
+
+        .student-type-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background-color: transparent;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .student-type-btn.active {
+            background-color: var(--accent-color);
+            color: var(--text-on-primary);
+        }
+
+        .finance-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .finance-card {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid rgba(63, 62, 51, 0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .card-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .expense-categories {
+            margin-top: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(63, 62, 51, 0.1);
+        }
+
+        .category-name {
+            display: flex;
+            align-items: center;
+        }
+
+        .category-name i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+        }
+
+        .category-amount {
+            font-weight: 500;
+        }
+
+        .add-expense-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: var(--text-on-primary);
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-expense-btn:hover {
+            opacity: 0.9;
+        }
+
+        .hostel-specific {
+            display: none;
+        }
+
+        .hostel-mode .hostel-specific {
+            display: block;
+        }
+
+        .dayscholar-mode .hostel-specific {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <div style="display: flex; align-items: center;">
+            <div class="app-bar-title">TirthaYatra Finance</div>
+        </div>
+        <div class="avatar">
+            <i class="material-icons">account_balance_wallet</i>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="finance-section">
+            <h2 class="section-title">
+                <i class="material-icons">monetization_on</i>
+                Student Finance Tracker
+            </h2>
+            
+            <div class="student-type-toggle">
+                <button class="student-type-btn active" id="hostel-btn">Hosteller</button>
+                <button class="student-type-btn" id="dayscholar-btn">Dayscholar</button>
+            </div>
+            
+            <div class="finance-cards">
+                <div class="finance-card">
+                    <div class="card-title">Monthly Budget</div>
+                    <div class="card-amount">₹8,500</div>
+                </div>
+                <div class="finance-card">
+                    <div class="card-title">Remaining</div>
+                    <div class="card-amount">₹3,200</div>
+                </div>
+            </div>
+            
+            <div class="expense-categories">
+                <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--primary-color);">Expense Breakdown</h3>
+                
+                <div class="category-item">
+                    <div class="category-name">
+                        <i class="material-icons">restaurant</i>
+                        <span>Food</span>
+                    </div>
+                    <div class="category-amount">₹2,800</div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-name">
+                        <i class="material-icons">book</i>
+                        <span>Stationery</span>
+                    </div>
+                    <div class="category-amount">₹450</div>
+                </div>
+                
+                <div class="category-item hostel-specific">
+                    <div class="category-name">
+                        <i class="material-icons">home</i>
+                        <span>Hostel Fees</span>
+                    </div>
+                    <div class="category-amount">₹1,200</div>
+                </div>
+                
+                <div class="category-item hostel-specific">
+                    <div class="category-name">
+                        <i class="material-icons">local_laundry_service</i>
+                        <span>Laundry</span>
+                    </div>
+                    <div class="category-amount">₹300</div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-name">
+                        <i class="material-icons">directions_bus</i>
+                        <span>Transport</span>
+                    </div>
+                    <div class="category-amount">₹1,000</div>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-name">
+                        <i class="material-icons">local_activity</i>
+                        <span>Entertainment</span>
+                    </div>
+                    <div class="category-amount">₹750</div>
+                </div>
+            </div>
+            
+            <button class="add-expense-btn">
+                <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">add</i>
+                Add New Expense
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hostelBtn = document.getElementById('hostel-btn');
+            const dayscholarBtn = document.getElementById('dayscholar-btn');
+            const financeSection = document.querySelector('.finance-section');
+            
+            hostelBtn.addEventListener('click', function() {
+                this.classList.add('active');
+                dayscholarBtn.classList.remove('active');
+                financeSection.classList.add('hostel-mode');
+                financeSection.classList.remove('dayscholar-mode');
+                // Update budget for hosteller
+                document.querySelectorAll('.card-amount')[0].textContent = '₹8,500';
+            });
+            
+            dayscholarBtn.addEventListener('click', function() {
+                this.classList.add('active');
+                hostelBtn.classList.remove('active');
+                financeSection.classList.add('dayscholar-mode');
+                financeSection.classList.remove('hostel-mode');
+                // Update budget for dayscholar
+                document.querySelectorAll('.card-amount')[0].textContent = '₹6,200';
+            });
+            
+            // Simulate adding a new expense (would be connected to backend in real app)
+            document.querySelector('.add-expense-btn').addEventListener('click', function() {
+                alert('Expense entry form would open here\n\nFor hostellers: Would include hostel-specific categories\nFor dayscholars: Would include transport-specific options');
+            });
+        });
+    </script>
+</body>
+</html>
