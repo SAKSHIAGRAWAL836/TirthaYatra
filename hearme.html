@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Anonymous Campus Confessions</title>
+    <style>
+        :root {
+            --sage-green: #7A9A6B; /* Darker sage green */
+            --dark-sage: #5A7A4B; /* Adjusted to match */
+            --light-beige: #F5F5DC;
+            --darker-beige: #E8E4D8;
+            --dark-green: #2E4E3A;
+            --text-dark: #333333;
+            --text-light: #F8F8F8;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--dark-green);
+            color: var(--text-light);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: "✏📢🤫";
+            font-size: 1.5rem;
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            opacity: 0.3;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: "👂";
+            position: absolute;
+            right: -30px;
+            top: -5px;
+            font-size: 2rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .subtagline {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .post-form {
+            background-color: var(--darker-beige);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+            border: 2px dashed var(--sage-green);
+            position: relative;
+        }
+        
+        .post-form::before {
+            content: "👇 Whisper here 👇";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--light-beige);
+            padding: 0 10px;
+            font-size: 0.9rem;
+            color: var(--dark-sage);
+        }
+        
+        .post-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--sage-green);
+            border-radius: 10px;
+            min-height: 120px;
+            margin-bottom: 15px;
+            font-family: inherit;
+            background-color: white;
+            resize: vertical;
+            font-size: 1rem;
+        }
+        
+        .post-form textarea::placeholder {
+            color: var(--sage-green);
+            opacity: 0.7;
+        }
+        
+        .post-form button {
+            background-color: var(--dark-sage);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: block;
+            margin-left: auto;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-form button:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+        
+        .post-form button:active {
+            transform: translateY(0);
+        }
+        
+        .posts {
+            margin-top: 40px;
+        }
+        
+        .posts h2 {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .posts h2::after {
+            content: "🔍";
+            position: absolute;
+            right: -35px;
+        }
+        
+        .post {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--sage-green);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        
+        .post:hover {
+            transform: translateY(-3px);
+        }
+        
+        .post::before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 3rem;
+            color: var(--sage-green);
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .post-content {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--sage-green);
+            font-size: 0.9rem;
+        }
+        
+        .like-btn {
+            background: none;
+            border: none;
+            color: var(--sage-green);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        
+        .like-btn:hover {
+            color: var(--dark-sage);
+            background: rgba(122, 154, 107, 0.1);
+        }
+        
+        .like-btn::before {
+            content: "👍";
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--sage-green);
+            font-size: 0.9rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: "💡 Remember: Great minds think anonymously";
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .logo::after {
+                right: -25px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">HearMe</div>
+            <div class="tagline">The anonymous therapy your campus needs</div>
+            <div class="subtagline">(But probably doesn't deserve)</div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="post-form">
+            <h2>What's eating you?</h2>
+            <form id="newPostForm">
+                <textarea placeholder="Type your deepest secrets here... or just complain about cafeteria food 🍕" required></textarea>
+                <button type="submit">Shout into the void</button>
+            </form>
+        </section>
+        
+        <section class="posts">
+            <h2>Latest Whispers</h2>
+            
+            <article class="post">
+                <div class="post-content">
+                    Why do all my professors think their class is the only one I'm taking? Sir, I'm not a superhero (though my caffeine addiction suggests otherwise).
+                </div>
+                <div class="post-meta">
+                    <span>42 minutes ago</span>
+                    <button class="like-btn"> 137</button>
+                </div>
+            </article>
+            
+            <article class="post">
+                <div class="post-content">
+                    To the person who keeps stealing my assigned seat in the library: I know where you live. (Just kidding... or am I? 👀)
+                </div>
+                <div class="post-meta">
+                    <span>2 hours ago</span>
+                    <button class="like-btn"> 89</button>
+                </div>
+            </article>
+            
+            <article class="post">
+                <div class="post-content">
+                    PSA: The vending machine near Chem Dept eats dollars but gives snacks if you kick it just right. You're welcome.
+                </div>
+                <div class="post-meta">
+                    <span>1 day ago</span>
+                    <button class="like-btn"> 256</button>
+                </div>
+            </article>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>HearMe - Where your secrets are safe (unless they're really juicy)</p>
+            <p>Not actually anonymous if you confess to a crime lol</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Form submission with funny confirmation
+        document.getElementById('newPostForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const textarea = this.querySelector('textarea');
+            const postContent = textarea.value.trim();
+            
+            if (postContent) {
+                const confirmations = [
+                    "Post launched into the abyss!",
+                    "Your secret is safe with us (probably)",
+                    "Message bottled and thrown into the digital ocean",
+                    "Added to the collective consciousness"
+                ];
+                const randomConfirmation = confirmations[Math.floor(Math.random() * confirmations.length)];
+                
+                alert(randomConfirmation);
+                textarea.value = '';
+            }
+        });
+        
+        // Like button with funny hover effects
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const currentLikes = parseInt(this.textContent.match(/\d+/)[0]);
+                this.textContent = ` ${currentLikes + 1}`;
+                
+                // Fun animation
+                this.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+            
+            // Funny hover text
+            btn.addEventListener('mouseover', function() {
+                const hoverTexts = [
+                    "Agree?",
+                    "Same!",
+                    "Felt that",
+                    "Big mood",
+                    "Too real"
+                ];
+                this.title = hoverTexts[Math.floor(Math.random() * hoverTexts.length)];
+            });
+        });
+    </script>
+</body>
+</html>
